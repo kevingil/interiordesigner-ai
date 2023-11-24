@@ -33,9 +33,9 @@ function Showcase() {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    api_gallery_latest_url = "http://localhost:5000/api/gallery_latest"
+    api_gallery_latest_url = "https://localhost:5000/api/gallery_latest"
   } else {
-    api_gallery_latest_url = "http://147.182.233.135:5000/api/gallery_latest"
+    api_gallery_latest_url = "https://147.182.233.135:5000/api/gallery_latest"
   }
 
   useEffect(() => {
