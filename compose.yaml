@@ -13,4 +13,12 @@ services:
       context: .
       dockerfile: Dockerfile.server
     ports:
-      - "5000:5000"
+      - "5000"
+  nginx:
+    image: nginx-latest
+    volumes:
+      - ./server/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - flask-server
+    ports:
+      - "443:443"
