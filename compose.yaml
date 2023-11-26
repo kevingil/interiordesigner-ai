@@ -25,7 +25,6 @@ services:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
         FLASK: flask-server
-    entrypoint: /bin/entrypoint.sh
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt 
     depends_on:
