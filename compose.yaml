@@ -20,13 +20,13 @@ services:
       - 5000:5000
   nginx:
     image: nginx:latest
+    dockerfile: Dockerfile.nginx
     build:
       context: ./nginx
       args:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
         FLASK: flask-server
-      dockerfile: ./../Dockerfile.nginx
     entrypoint: /renew_cert.sh
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt 
