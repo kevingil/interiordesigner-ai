@@ -1,8 +1,6 @@
 # Flask app Dockerfile
 FROM python:3.11.6-alpine
 
-COPY server/ .
-
 # Install needed dependencies for our app to run.
 RUN apk update \
   && apk add --no-cache \
