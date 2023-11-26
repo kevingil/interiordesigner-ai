@@ -18,6 +18,9 @@ services:
       - "5000"
   nginx:
     image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
     entrypoint: /renew_ssl.sh
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
