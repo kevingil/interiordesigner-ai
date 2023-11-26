@@ -1,4 +1,4 @@
 #!/bin/sh
 
-certbot certonly --nginx
-nginx -s reload
+certbot certonly --nginx --deploy-hook "nginx -s reload"
+
