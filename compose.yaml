@@ -31,5 +31,6 @@ services:
     depends_on:
       - flask-server
     ports:
+      - "80"
       - "443:443"
     command: bash -c "nginx -g 'daemon off;'"
