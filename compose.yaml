@@ -25,7 +25,7 @@ services:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
         FLASK: flask-server
-      dockerfile: Dockerfile.nginx
+      dockerfile: ./../Dockerfile.nginx
     entrypoint: /renew_cert.sh
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt 
