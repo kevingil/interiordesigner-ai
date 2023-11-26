@@ -21,7 +21,7 @@ def return_home():
 # /api/gallery_latest
 @api.route("/gallery_latest", methods=['GET'])
 def return_gallery_latest():
-    renders = get_latest_renders(16)
+    renders = get_latest_images(16)
     return renders
     
 # /api/generate_render_test

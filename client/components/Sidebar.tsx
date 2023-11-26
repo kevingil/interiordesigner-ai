@@ -14,8 +14,8 @@ function Sidebar(props: any) {
     let api_generate_url = '';
 
     if (process.env.NODE_ENV === 'development') {
-        api_ping_url = "https://localhost:5000/api/ping"
-        api_generate_url = "https://localhost:5000/api/stability_generate_test"
+        api_ping_url = "http://localhost:5000/api/ping"
+        api_generate_url = "http://localhost:5000/api/stability_generate_test"
     } else {
         api_ping_url = "https://147.182.233.135:5000/api/ping"
         api_generate_url = "https://147.182.233.135:5000/api/stability_generate_test"

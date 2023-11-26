@@ -6,7 +6,8 @@ RUN apk update \
   && apk add --no-cache \
     gcc \
     libffi-dev \
-    musl-dev
+    musl-dev \
+    libpq
 
 WORKDIR /opt/app
 
