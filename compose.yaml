@@ -18,9 +18,9 @@ services:
       - "5000:5000"
   nginx:
     image: nginx:latest
-    dockerfile: Dockerfile.nginx
     build:
       context: ./nginx
+      dockerfile: Dockerfile.nginx
       args:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
