@@ -25,7 +25,7 @@ services:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
         FLASK: flask-server
-    entrypoint: /renew_cert.sh
+    entrypoint: /bin/entrypoint.sh
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt 
     depends_on:
