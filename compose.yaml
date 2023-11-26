@@ -13,7 +13,7 @@ services:
   flask-server:
     build:
       context: ./server
-      dockerfile: Dockerfile.nginx
+      dockerfile: Dockerfile.server
     command: gunicorn --bind 0.0.0.0:5000 --workers 3 ${FLASK_APP}:app
     environment:
       - FLASK_ENV=${FLASK_ENV}
