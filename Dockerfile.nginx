@@ -1,0 +1,9 @@
+FROM nginx:latest
+
+# Install Certbot
+RUN apt-get update && apt-get install -y certbot python3-certbot-nginx
+RUN certbot --version
+
+
+COPY renew_ssl.sh /renew_ssl.sh
+RUN chmod +x /renew_ssl.sh

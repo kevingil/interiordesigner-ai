@@ -15,10 +15,13 @@ services:
     ports:
       - "5000"
   nginx:
-    image: nginx-latest
+    image: nginx:latest
     volumes:
-      - ./server/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./key.pem:/root/ssl/key.pem
+      - ./cert.pem:/root/ssl/cert.pem
     depends_on:
       - flask-server
     ports:
       - "443:443"
+    command: bash -c "cron && nginx -g 'daemon off;'"

@@ -1,6 +1,8 @@
-venv
-
+# Cache
 __pycache__
-
+# This is not working
 *.db
+# SDXL output images
 .png
+# Virtual environment
+venv/
