@@ -11,20 +11,24 @@ services:
       - "5000" 
 
   flask-server:
-    build:
-      context: .
-      dockerfile: Dockerfile.server
-    expose:
-      - "5000"
+    build: ./${APP_FOLDER}
+    command: gunicorn --bind 0.0.0.0:5000 --workers 3 ${FLASK_APP}:app
+    environment:
+      - FLASK_ENV=${FLASK_ENV}
+    ports:
+      - 5000:5000
   nginx:
     image: nginx:latest
     build:
-      context: .
+      context: ./nginx
+      args:
+        DOMAIN: ${DOMAIN}
+        EMAIL: ${EMAIL}
+        FLASK: flask-server
       dockerfile: Dockerfile.nginx
-    entrypoint: /renew_ssl.sh
+    entrypoint: /renew_cert.sh
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - ./server/nginx.conf:/etc/nginx/conf.d/default.conf  
+      - /etc/letsencrypt:/etc/letsencrypt 
     depends_on:
       - flask-server
     ports:
