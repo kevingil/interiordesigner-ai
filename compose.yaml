@@ -21,7 +21,7 @@ services:
     image: nginx:latest
     build:
       context: ./nginx
-      dockerfile: Dockerfile.nginx
+      dockerfile: Dockerfile
       args:
         DOMAIN: ${DOMAIN}
         EMAIL: ${EMAIL}
