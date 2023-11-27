@@ -157,8 +157,7 @@ function Showcase() {
                     {selectedImageIndex !== null && (
                       <div className='flex mt-4 gap-2 font-semibold text-xs sm:text-sm'>
                         <span className='px-2'>Date: {latestImages[selectedImageIndex][4]}</span>
-                        <span className='px-2'>API: {latestImages[selectedImageIndex][3]}</span>
-                        <span className='px-2'>Render time: {(Number(latestImages[selectedImageIndex][1])).toFixed(2) + "s"}</span>
+                        <span className='px-2'>Model: {latestImages[selectedImageIndex][3]}</span>
                       </div>
                     )}
 

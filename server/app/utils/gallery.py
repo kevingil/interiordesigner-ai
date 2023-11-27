@@ -3,7 +3,7 @@ from datetime import datetime
 from psycopg import connect, sql
 
 def get_latest_images(n):
-    # Connect to PostgreSQL database
+    # Construct the connection string
     dbname = 'neondb' 
     user = 'kevingil'  # Replace with your PostgreSQL username
     password = '4dysoVRXk9Nq'  # Replace with your PostgreSQL password
@@ -27,9 +27,17 @@ def get_latest_images(n):
     return latest_images
 
 
-def update_gallery(render_time, image_urls):
+def update_gallery(render_time, model, image_urls):
     # Connect to PostgreSQL database
-    conn_string = f"dbname={os.getenv('PG_DBNAME')} user={os.getenv('PG_USERNAME')} password={os.getenv('PG_PASSWORD')} host={os.getenv('PG_HOST')} port={os.getenv('PG_PORT')}"
+    dbname = 'neondb' 
+    user = 'kevingil'  # Replace with your PostgreSQL username
+    password = '4dysoVRXk9Nq'  # Replace with your PostgreSQL password
+    host = 'ep-twilight-glitter-09005170.us-west-2.aws.neon.tech'
+    port = '5432'  # Default PostgreSQL port
+    sslmode = 'require'
+
+    # Construct the connection string
+    conn_string = f"dbname={dbname} user={user} password={password} host={host} port={port} sslmode={sslmode}"
     with connect(conn_string) as conn:
         with conn.cursor() as cursor:
             timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -39,9 +47,10 @@ def update_gallery(render_time, image_urls):
                 cursor.execute(sql.SQL('''
                     INSERT INTO images (rendertime, timestamp, owner, description, imageurl)
                     VALUES (%s, %s, %s, %s, %s)
-                '''), (render_time, timestamp, 1, 'SBXL 1.0', image_url))
+                '''), (render_time, timestamp, 1, model, image_url))
 
             conn.commit()
+    conn.close()
             
 # Old scripts pulling from SQLite database
 
