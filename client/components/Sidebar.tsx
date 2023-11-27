@@ -17,8 +17,8 @@ function Sidebar(props: any) {
         api_ping_url = "http://localhost:5000/api/ping"
         api_generate_url = "http://localhost:5000/api/stability_generate_test"
     } else {
-        api_ping_url = "https://147.182.233.135:5000/api/ping"
-        api_generate_url = "https://147.182.233.135:5000/api/stability_generate_test"
+        api_ping_url = "https://api.interiordesigner-ai.com/api/ping"
+        api_generate_url = "https://api.interiordesigner-ai.com/api/stability_generate_test"
     }
 
     const [ping_message, setMessage] = useState("Testing connection");
