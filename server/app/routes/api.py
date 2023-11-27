@@ -21,7 +21,7 @@ def return_home():
 # /api/gallery_latest
 @api.route("/gallery_latest", methods=['GET'])
 def return_gallery_latest():
-    renders = get_latest_renders(16)
+    renders = get_latest_images(16)
     return renders
     
 # /api/generate_render_test
@@ -75,7 +75,7 @@ def stability_generate_test():
     if (stability_renders):
         uploaded_images = upload_image_bytes("interiordesigner/", stability_renders)
         imgreq['images'] = uploaded_images
-        update_gallery(render_time, "Stable Diffusion XL 1.0 ", uploaded_images)
+        update_gallery(render_time, "SBXL 1.0", uploaded_images)
     else:
         imgreq['error'] = 'Failed to generate'
     

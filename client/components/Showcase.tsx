@@ -33,9 +33,9 @@ function Showcase() {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    api_gallery_latest_url = "https://localhost:5000/api/gallery_latest"
+    api_gallery_latest_url = "http://localhost:5000/api/gallery_latest"
   } else {
-    api_gallery_latest_url = "https://147.182.233.135:5000/api/gallery_latest"
+    api_gallery_latest_url = "https://api.interiordesigner-ai.com/api/gallery_latest"
   }
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function Showcase() {
                   <div className="h-full flex object-cover" key={index} onClick={() => openModal(index)}>
                     <Image
                       key={index}
-                      src={image[4]}
+                      src={image[1]}
                       width={300}
                       height={300}
                       placeholder="blur"
@@ -144,7 +144,7 @@ function Showcase() {
                   <div className="mt-2 w-full">
                     {selectedImageIndex !== null && (
                       <Image
-                        src={latestImages[selectedImageIndex][4]}
+                        src={latestImages[selectedImageIndex][1]}
                         width={768}
                         height={600}
                         alt=""
@@ -156,9 +156,8 @@ function Showcase() {
 
                     {selectedImageIndex !== null && (
                       <div className='flex mt-4 gap-2 font-semibold text-xs sm:text-sm'>
-                        <span className='px-2'>Date: {latestImages[selectedImageIndex][2]}</span>
-                        <span className='px-2'>API: {latestImages[selectedImageIndex][3]}</span>
-                        <span className='px-2'>Render time: {(Number(latestImages[selectedImageIndex][1])).toFixed(2) + "s"}</span>
+                        <span className='px-2'>Date: {latestImages[selectedImageIndex][4]}</span>
+                        <span className='px-2'>Model: {latestImages[selectedImageIndex][3]}</span>
                       </div>
                     )}
 

@@ -1,16 +1,27 @@
 version: '3.8'
 
 services:
-  react-client:
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-    ports:
-      - "3000:3000"
-
   flask-server:
-    build:
-      context: .
-      dockerfile: Dockerfile.server
+    build: ./${APP_FOLDER}
+    command: gunicorn --bind 0.0.0.0:5000 --workers 3 ${FLASK_APP}:app
+    environment:
+      - FLASK_ENV=${FLASK_ENV}
     ports:
-      - "5000:5000"
+      - 5000:5000
+  nginx:
+    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        DOMAIN: ${DOMAIN}
+        EMAIL: ${EMAIL}
+        FLASK: flask-server
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt 
+    depends_on:
+      - flask-server
+    ports:
+      - "80:80"
+      - "443:443"
+    command: bash -c "nginx -g 'daemon off;'"

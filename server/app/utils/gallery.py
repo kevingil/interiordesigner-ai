@@ -1,7 +1,61 @@
-import sqlite3
+import os
 from datetime import datetime
+from psycopg import connect, sql
 
-def get_latest_renders(n):
+def get_latest_images(n):
+    # Construct the connection string
+    dbname = 'neondb' 
+    user = 'kevingil'  # Replace with your PostgreSQL username
+    password = '4dysoVRXk9Nq'  # Replace with your PostgreSQL password
+    host = 'ep-twilight-glitter-09005170.us-west-2.aws.neon.tech'
+    port = '5432'  # Default PostgreSQL port
+    sslmode = 'require'
+
+    # Construct the connection string
+    conn_string = f"dbname={dbname} user={user} password={password} host={host} port={port} sslmode={sslmode}"
+    with connect(conn_string) as conn:
+        with conn.cursor() as cursor:
+            # Use SQL parameters to avoid SQL injection
+            cursor.execute(sql.SQL('''
+                SELECT * FROM images
+                ORDER BY timestamp DESC
+                LIMIT %s
+            '''), (n,))
+
+            latest_images = cursor.fetchall()
+
+    return latest_images
+
+
+def update_gallery(render_time, model, image_urls):
+    # Connect to PostgreSQL database
+    dbname = 'neondb' 
+    user = 'kevingil'  # Replace with your PostgreSQL username
+    password = '4dysoVRXk9Nq'  # Replace with your PostgreSQL password
+    host = 'ep-twilight-glitter-09005170.us-west-2.aws.neon.tech'
+    port = '5432'  # Default PostgreSQL port
+    sslmode = 'require'
+
+    # Construct the connection string
+    conn_string = f"dbname={dbname} user={user} password={password} host={host} port={port} sslmode={sslmode}"
+    with connect(conn_string) as conn:
+        with conn.cursor() as cursor:
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            for image_url in image_urls:
+                # Use SQL parameters to avoid SQL injection
+                cursor.execute(sql.SQL('''
+                    INSERT INTO images (rendertime, timestamp, owner, description, imageurl)
+                    VALUES (%s, %s, %s, %s, %s)
+                '''), (render_time, timestamp, 1, model, image_url))
+
+            conn.commit()
+    conn.close()
+            
+# Old scripts pulling from SQLite database
+
+"""
+def get_latest_renders_old(n):
     conn = sqlite3.connect('gallery.db')
     cursor = conn.cursor()
 
@@ -17,7 +71,7 @@ def get_latest_renders(n):
     return latest_images
 
 
-def update_gallery(render_time, engine, image_urls):
+def update_gallery_old(render_time, engine, image_urls):
     conn = sqlite3.connect('gallery.db')
     cursor = conn.cursor()
 
@@ -32,3 +86,4 @@ def update_gallery(render_time, engine, image_urls):
     conn.commit()
     conn.close()
 
+"""

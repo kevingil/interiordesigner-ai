@@ -31,11 +31,11 @@ input:checked+label {
     border: 0;
 }
 
-#submit_request {
+#submit_request, #login_request {
     background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-#submit_request:hover {
+#submit_request:hover, #login_request:hover {
     background-image: linear-gradient(135deg, #4f63bb 0%, #60348b 100%);
 }
 
