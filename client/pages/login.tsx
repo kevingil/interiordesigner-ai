@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Call API endpoint for login
-        // Example: fetch('/api/login', { method: 'POST', body: { email, password } })
+        // Example: fetch('/login', { method: 'POST', body: { email, password } })
         // Handle login logic here
 
         // Redirect to /home after successful authentication

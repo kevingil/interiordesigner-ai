@@ -1,37 +1,33 @@
-from flask import Blueprint, request, jsonify
-from flask_cors import CORS
-from ..utils.prompt import generate_prompt
-from ..utils.generate_image_test import generate_image_test
-from ..utils.r2 import *
-from ..utils.gallery import *
-from ..utils.stability_text import *
+from fastapi import Request, Path, Query, APIRouter
+from app.utils.prompt import generate_prompt
+from app.utils.generate_image_test import generate_image_test
+from app.utils.r2 import *
+from app.utils.gallery import *
+from app.utils.stability_text import *
 import time
 
+router = APIRouter()
 
-api = Blueprint('api', __name__)
-CORS(api)
 
-# /api/ping
-@api.route("/ping", methods=['GET'])
-def return_home():
-    return jsonify({
-        'message': "Server Online"
-    })
+@router.get("/ping")
+async def return_home():
+    return {'message': "Server Online"}
+
     
-# /api/gallery_latest
-@api.route("/gallery_latest", methods=['GET'])
-def return_gallery_latest():
+@router.get("/gallery_latest")
+async def return_gallery_latest(request: Request):
+    print(request)
     renders = get_latest_images(16)
     return renders
     
-# /api/generate_render_test
-@api.route("/generate_test", methods=['POST'])
-def generate_test():
-    print(request.get_json())
-    data = request.get_json()
+    
+@router.post("/generate_test")
+async def generate_test(request: Request):
+    print(request)
+    data = request
     
     if data is None:
-        return jsonify({'error': 'No JSON data provided in the request'}), 400
+        return {'error': 'No JSON data provided in the request'}, 400
     
     start_time = time.time()
     
@@ -51,17 +47,17 @@ def generate_test():
     else:
         print(render_test)
         
-    print(jsonify(response))
-    return jsonify(response)
+    print(response)
+    return response
 
 
 # /api/generate_render_test
-@api.route("/stability_generate_test", methods=['POST'])
-def stability_generate_test():
-    data = request.get_json()
+@router.post("/stability_generate_test")
+async def stability_generate_test(request: Request):
+    data = request
     
     if data is None:
-        return jsonify({'error': 'No JSON data provided in the request'}), 400
+        return {'error': 'No JSON data provided in the request'}, 400
     
     start_time = time.time()
     # Image request
@@ -79,4 +75,4 @@ def stability_generate_test():
     else:
         imgreq['error'] = 'Failed to generate'
     
-    return jsonify(imgreq)
+    return imgreq
