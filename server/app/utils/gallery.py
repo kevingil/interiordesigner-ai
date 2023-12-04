@@ -1,6 +1,6 @@
 import os
 import asyncpg
-from asyncpg import connect, Pool
+from asyncpg import Pool
 from datetime import datetime
 from dotenv import load_dotenv
 

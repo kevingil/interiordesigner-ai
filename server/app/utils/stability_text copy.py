@@ -1,7 +1,6 @@
 import os
 import io
 import warnings
-import random
 from PIL import Image
 from stability_sdk import client
 from dotenv import load_dotenv
