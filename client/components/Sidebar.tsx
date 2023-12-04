@@ -17,7 +17,7 @@ function Sidebar(props: any) {
         api_ping_url = "http://localhost:5000/ping"
         api_generate_url = "http://localhost:5000/generate_render"
     } else {
-        api_ping_url = "https://api.interiordesigner-ai.com/api/ping"
+        api_ping_url = "https://api.interiordesigner-ai.com/ping"
         api_generate_url = "https://api.interiordesigner-ai.com/generate_render"
     }
 

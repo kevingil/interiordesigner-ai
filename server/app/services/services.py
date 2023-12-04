@@ -20,7 +20,7 @@ async def return_gallery_latest(request: Request):
     renders = await get_latest_images(12)
     return renders
     
-# /api/generate_render
+# /generate_render
 @router.post("/generate_render")
 async def generate_render(request: Request):
     data = await request.json()
