@@ -73,7 +73,7 @@ def upload_image_bytes(prefix, image_bytes):
         uploaded_image_urls = []
 
         for bytes in image_bytes:
-
+            
             key = f"{prefix}{str(uuid.uuid4())}"
             
             try:

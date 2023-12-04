@@ -15,10 +15,10 @@ function Sidebar(props: any) {
 
     if (process.env.NODE_ENV === 'development') {
         api_ping_url = "http://localhost:5000/ping"
-        api_generate_url = "http://localhost:5000/stability_generate_test"
+        api_generate_url = "http://localhost:5000/generate_render"
     } else {
         api_ping_url = "https://api.interiordesigner-ai.com/api/ping"
-        api_generate_url = "https://api.interiordesigner-ai.com/api/stability_generate_test"
+        api_generate_url = "https://api.interiordesigner-ai.com/generate_render"
     }
 
     const [ping_message, setMessage] = useState("Testing connection");

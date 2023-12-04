@@ -23,7 +23,6 @@ async def neon_ping():
             # Fetch the result (if any)
             if result:
                 print("Ping test:")
-                print(result)
             else:
                 print("No rows found. Updating ALL from S3")
                     

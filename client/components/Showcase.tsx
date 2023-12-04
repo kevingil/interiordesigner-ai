@@ -2,6 +2,17 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useEffect, useState, Fragment } from 'react';
 import Image from 'next/image'
 
+interface ImageData {
+  id: number;
+  imageurl: string;
+  owner: number;
+  description: string;
+  timestamp: string;
+  rendertime: string;
+  seed: number | null;
+  upload: string | null;
+  blurhash64: string;
+}
 
 function Showcase() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,12 +21,12 @@ function Showcase() {
     const timeoutId = setTimeout(() => {
       setIsShowing(true);
     }, 500);
-  
+
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []); 
-  const [latestImages, setLatestImages] = useState([]);
+  }, []);
+  const [latestImages, setLatestImages] = useState<ImageData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
@@ -42,8 +53,15 @@ function Showcase() {
     async function fetchLatestImages() {
       try {
         const response = await fetch(api_gallery_latest_url);
-        const data = await response.json();
-        setLatestImages(data);
+        const data: ImageData[] = await response.json();
+        console.log(data)
+        data.forEach((image: ImageData) => {
+          if (image.blurhash64 === null) {
+            image.blurhash64 = blurredImage
+          } else {
+            image.blurhash64 = "data:image/jpeg;base64," + image.blurhash64
+          }});
+        setLatestImages(data)
         setIsLoading(false);
       } catch (error) {
         console.error("Error retreiving images, server might be offline:", error);
@@ -58,55 +76,54 @@ function Showcase() {
   return (
     <div className='max-w-[900px] mx-auto'>
       <Transition
-                  className=""
-                  show={isShowing}
-                  enter="transition-all ease-in-out duration-300"
-                  enterFrom="opacity-0 translate-y-6"
-                  enterTo="opacity-100 translate-y-0"
-                  leave="transition-all ease-in-out duration-300"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-      <div className="bg-stone-900/50 backdrop-blur-sm rounded-xl shadow p-4 w-full mt-2">
-        <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
-          {isLoading ? (
-            <>
-              {[...Array(4)].map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="bg-slate-700 rounded-xl max-h-[200px] w-full">
-                    <div className='w-[70%] m-auto p-4'>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="fill-gray-500">
-                        <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
-                      </svg>
+        className=""
+        show={isShowing}
+        enter="transition-all ease-in-out duration-300"
+        enterFrom="opacity-0 translate-y-6"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition-all ease-in-out duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="bg-stone-900/50 backdrop-blur-sm rounded-xl shadow p-4 w-full mt-2">
+          <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
+            {isLoading ? (
+              <>
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="animate-pulse">
+                    <div className="bg-slate-700 rounded-xl max-h-[200px] w-full">
+                      <div className='w-[70%] m-auto p-4'>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="fill-gray-500">
+                          <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </>
-          ) : (
-            !isLoading && latestImages.map((image, index) => {
-              return (
-                <div key={index} className="max-h-full overflow-hidden cursor-pointer sm:p-1">
-                  <div className="h-full flex object-cover" key={index} onClick={() => openModal(index)}>
-                    <Image
-                      key={index}
-                      src={image[1]}
-                      width={300}
-                      height={300}
-                      placeholder="blur"
-                      blurDataURL={blurredImage}
-                      alt=""
-                      priority={false}
-                      className='rounded-xl shadow hover:shadow-xl object-cover h-full aspect-square cursor-pointer'
-                    />
+                ))}
+              </>
+            ) : (
+              !isLoading && latestImages.map((image: ImageData, index: number) => {
+                return (
+                  <div key={index} className="max-h-full overflow-hidden cursor-pointer sm:p-1">
+                    <div className="h-full flex" key={index} onClick={() => openModal(index)}>
+                      <Image
+                        key={index}
+                        src={image.imageurl}
+                        width={300}
+                        height={300}
+                        placeholder="blur"
+                        blurDataURL={image.blurhash64}
+                        alt=""
+                        priority={false}
+                        className='rounded-xl shadow hover:shadow-xl object-cover h-full w-full aspect-square cursor-pointer'
+                      />
+                    </div>
                   </div>
-                
-              </div>
-              );
-            })
-          )}
+                );
+              })
+            )}
+          </div>
         </div>
-      </div>
       </Transition>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -144,20 +161,20 @@ function Showcase() {
                   <div className="mt-2 w-full">
                     {selectedImageIndex !== null && (
                       <Image
-                        src={latestImages[selectedImageIndex][1]}
+                        src={latestImages[selectedImageIndex].imageurl}
                         width={768}
                         height={600}
                         alt=""
                         priority={false}
                         className="rounded-xl w-full"
-                        placeholder="blur" blurDataURL={blurredImage}
+                        placeholder="blur" blurDataURL={latestImages[selectedImageIndex].blurhash64}
                       />
                     )}
 
                     {selectedImageIndex !== null && (
                       <div className='flex mt-4 gap-2 font-semibold text-xs sm:text-sm'>
-                        <span className='px-2'>Date: {latestImages[selectedImageIndex][4]}</span>
-                        <span className='px-2'>Model: {latestImages[selectedImageIndex][3]}</span>
+                        <span className='px-2'>Date: {latestImages[selectedImageIndex].timestamp}</span>
+                        <span className='px-2'>Model: {latestImages[selectedImageIndex].description}</span>
                       </div>
                     )}
 
@@ -165,8 +182,8 @@ function Showcase() {
 
                   <div className="mt-6 flex justify-end gap-4">
                     {selectedImageIndex !== null && (
-                      <a href={latestImages[selectedImageIndex][4]}
-                        download={latestImages[selectedImageIndex][4]} target="_blank"
+                      <a href={latestImages[selectedImageIndex].imageurl}
+                        download={latestImages[selectedImageIndex].imageurl} target="_blank"
                         className="inline-flex justify-center rounded-md border-none border-transparent bg-zinc-500 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700 focus:bg-zinc-700 focus:outline-none focus-visible:ring-0 focus-visible:ring-0 focus-visible:ring-0">
                         Open
                       </a>
