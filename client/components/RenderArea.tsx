@@ -7,8 +7,6 @@ function RenderArea(props: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
-  let blurredImage = "https://cdn.kevingil.com/blur.png";
-
   function closeModal() {
     setIsOpen(false);
     setSelectedImageIndex(null);
@@ -22,24 +20,32 @@ function RenderArea(props: any) {
     <div className="backdrop-blur-sm rounded-xl grow sm:h-full">
       <p className='text-xl'>Image Render</p>
 
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center w-ful h-full">
         {props.loading ? (
           <div className='w-full text-center'>
             <p>Generating... This can take up to 10s/image</p>
             <div className='m-8 flex content-center justify-center'>
-              <img src="/loading-grid.svg" alt="Loading" className='max-h-12' />
+              <Image src="/loading-grid.svg"
+              alt="Loading"
+              width={100}
+              height={100}
+              className='max-h-12' />
             </div>
           </div>
         ) : (
           props.response ? (
-            <div className="text-white text-lg">
-              <div className='flex flex-row flex-wrap gap-6 mt-6 sm:mt-0'>
+            <div className="text-white text-lg flex h-full ">
+              <div className='flex flex-row flex-wrap gap-6 mt-6 sm:mt-0 content-center'>
                 {props.response.images && Array.isArray(props.response.images) && props.response.images.length > 0 ? (
-                  props.response.images.map((image: string, index: number) => (
-                    <img onClick={() => openModal(index)}
+                  props.response.images.map((image: string, index: number, blurhash64: string) => (
+                    <Image onClick={() => openModal(index)}
+                      alt=""
                       key={index}
                       src={image}
-                      className="max-w-full sm:max-h-[500px] mx-auto rounded-xl max-w-[65%] sm:max-w-[45%] cursor-pointer"
+                      width={300}
+                      height={300}
+                      blurDataURL={blurhash64}
+                      className="mx-auto rounded-xl sm:max-h-[500px] cursor-pointer content-center"
                     />
                   ))
                 ) : (
@@ -90,13 +96,13 @@ function RenderArea(props: any) {
                   <div className="mt-2 w-full">
                     {selectedImageIndex !== null && (
                       <>
-                        <p className='hidden'>Selected Index: {selectedImageIndex}</p>
                         <p className='hidden'>Images Array: {JSON.stringify(props.response.images)}</p>
-                        <img
+                        <Image
+                          alt=""
                           src={props.response.images[selectedImageIndex]}
                           width={768}
                           height={600}
-                          alt=""
+                          blurDataURL={"data:image/jpeg;base64," + props.response.blurhash64[selectedImageIndex]}
                           className="rounded-xl w-full"
                         />
                       </>

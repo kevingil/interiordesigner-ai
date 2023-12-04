@@ -1,6 +1,20 @@
-from app import app
-from db import neon_ping
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.services.services import router
+import uvicorn
+
+app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
-    neon_ping()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    uvicorn.run("run:app", port=5000, log_level="info")
+
+app.include_router(router)

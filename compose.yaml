@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   flask-server:
-    build: ./${APP_FOLDER}
-    command: gunicorn --bind 0.0.0.0:5000 --workers 3 ${FLASK_APP}:app
+    build: ./server
+    command: uvicorn run:app --host 0.0.0.0 --port 5000 --workers 3 
     environment:
       - FLASK_ENV=${FLASK_ENV}
     ports:
