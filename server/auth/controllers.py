@@ -7,18 +7,18 @@ from typing import Optional, OrderedDict
 from jwt import *
 import json
 
-import models, schemas
+import server.models.auth as auth, server.schemas.auth as auth
 def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+    return db.query(auth.User).filter(auth.User.id == user_id).first()
 
 def get_user_by_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == email).first()
+    return db.query(auth.User).filter(auth.User.email == email).first()
 
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
+    return db.query(auth.User).offset(skip).limit(limit).all()
 
-def create_user(db: Session, user: schemas.UserCreate):
+def create_user(db: Session, user: auth.UserCreate):
     salt = os.urandom(32)
     key = hashlib.pbkdf2_hmac(
         'sha256', # The hash digest algorithm for HMAC
@@ -31,7 +31,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     encodedKey = base64.b64encode(key)
     # fake_hashed_password = user.password + "notreallyhashed"
      
-    db_user = models.User(email=user.email, hashed_password=encodedKey.decode('utf-8'),salt=encodedSalt.decode('utf-8'))
+    db_user = auth.User(email=user.email, hashed_password=encodedKey.decode('utf-8'),salt=encodedSalt.decode('utf-8'))
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -40,12 +40,12 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
+    return db.query(auth.Item).offset(skip).limit(limit).all()
 
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
+def create_user_item(db: Session, item: auth.ItemCreate, user_id: int):
+    db_item = auth.Item(**item.dict(), owner_id=user_id)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
@@ -53,7 +53,7 @@ def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
 def create_user_note(db:Session, note:str,user_id:int):
     print(note)
     # note = json.loads(note)
-    db_item = models.Note(**note, owner_id=user_id)
+    db_item = auth.Note(**note, owner_id=user_id)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
@@ -61,16 +61,16 @@ def create_user_note(db:Session, note:str,user_id:int):
 def update_user_note(db:Session, note:str,user_id:int):
     # print(note)
     # note = json.loads(note)
-    db_item = models.Note(**note, owner_id=user_id)
-    updateObject = db.query(models.Note).filter_by(owner_id=user_id,id=note["id"]).first()
+    db_item = auth.Note(**note, owner_id=user_id)
+    updateObject = db.query(auth.Note).filter_by(owner_id=user_id,id=note["id"]).first()
     updateObject.description = db_item.description
     updateObject.title = db_item.title
     db.commit()
     db.refresh(updateObject)
     return note
 
-def get_user_notes(db: Session, user: schemas.User,skip: int = 0, limit: int = 100):
-    items = db.query(models.Note).filter_by(owner_id=user.id).offset(skip).limit(limit).all()
+def get_user_notes(db: Session, user: auth.User,skip: int = 0, limit: int = 100):
+    items = db.query(auth.Note).filter_by(owner_id=user.id).offset(skip).limit(limit).all()
     notes = []
     for item in items:
         note = OrderedDict()
@@ -82,7 +82,7 @@ def get_user_notes(db: Session, user: schemas.User,skip: int = 0, limit: int = 1
 
 def delete_user_note(db: Session, note:str,user_id: int):
     # note = json.loads(note)
-    item = db.query(models.Note).filter_by(owner_id=user_id,id=note["id"]).first()
+    item = db.query(auth.Note).filter_by(owner_id=user_id,id=note["id"]).first()
     # db.add(db_item)
     db.delete(item)
     db.commit()
