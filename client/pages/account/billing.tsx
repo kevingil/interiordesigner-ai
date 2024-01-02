@@ -1,4 +1,4 @@
-import Account from '@/components/account';
+import Account from '@/components/Account';
 
 
 const AccountBilling: React.FC = () => {
