@@ -16,7 +16,8 @@ const Navigation = () => {
         };
     }, []);
   return (
-    <nav className="rounded p-2 mx-auto my-2 w-full flex justify-between items-center max-w-[900px]">
+    <div className='z-50 fixed w-full bg-black/90 backdrop-blur-sm shadow-md'>
+<nav className="rounded p-2 mx-auto my-2 mb-3 flex justify-between items-center max-w-[900px]">
       <div className="text-2xl font-semibold home_title_nav">
         <Link href="/">Interior Designer.AI</Link>
       </div>
@@ -26,6 +27,8 @@ const Navigation = () => {
         <a href="https://github.com/kevingil/interior-designer">Github</a>
       </div>
     </nav>
+    </div>
+    
   );
 };
 

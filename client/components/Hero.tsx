@@ -39,8 +39,9 @@ const Hero = () => {
 
   return (
     <>
-      <div className='max-w-[900px] mx-auto'>
-        <section id="hero-section" className=''>
+      <div className='mx-auto'>
+      <div className='bg-slate-900/10'>
+        <section id="hero-section" className=' max-w-[900px] mx-auto'>
           <div className="text-content">
             <h3 className="main-heading">Brainstorm for your <br/><span className='text-white' ref={el} /></h3>
             <p className="subtext">With an easy to use interface <br /> powered by <span className='gradient_text'>AI.</span></p>
@@ -55,7 +56,7 @@ const Hero = () => {
               leaveTo="opacity-0 -translate-y-1">
               <p className='text-center mx-4 my-8'>
                 <Link id="home_create" href="/create" target="_self"
-                  className='signup-button border-solid text-xs sm:text-xl border-2 border-sky-500 mx-4 px-4 sm:px-8 py-2 sm:py-3 rounded-[3rem]'>Create Now</Link>
+                  className='text-xs sm:text-xl mx-4 px-4 sm:px-8 py-2 sm:py-3 rounded-full'>Create Now</Link>
               </p>
             </Transition>
           </div>
@@ -73,25 +74,33 @@ const Hero = () => {
             </div>
           </div>
         </section>
-        <section className='flex flex-col sm:flex-row p-4 mt-12 mb-[200px]'>
+        </div>
+        <div className='flex flex-col sm:flex-row p-4 mt-12 mb-[200px] gap-12 max-w-[900px] mx-auto'>
           <div className='w-full'>
                 <Image width={300} height={200}  alt="A description for the second image." src="/images/5f5de522-ff66-47bf-881f-6189f3cba4cc.png" className="w-full shadow-lg rounded-lg" />
           </div>
-          <div className='w-full'></div>
-        </section>
-        <section className='flex flex-col sm:flex-row p-4 mb-[200px]'>
-          <div className='w-full bg-zinc-800 rounded-xl p-4'>
-                <p className='text-3xl font-semibold px-8'>
-                Simple to use interface.
+          <div className='w-full my-auto feature'>
+                <h3 className='text-3xl font-semibold mb-4'>
+                Browse our gallery.
+                </h3>
+                <p className='mb-4'>
+                  See what other people have generated with Interior Designer AI.
                 </p>
-                <p className='p-8'>
-                  No need to learn complex software. Just pick a room to get new ideas.
+          </div>
+        </div>
+        <div className='flex flex-col sm:flex-row p-4 mb-[200px] gap-12 max-w-[900px] mx-auto'>
+          <div className='w-full my-auto feature'>
+                <h3 className='text-3xl font-semibold mb-4'>
+                Simple to use interface.
+                </h3>
+                <p className='mb-4'>
+                  No need to learn complex software. Just pick a room type and style to get new ideas fast.
                 </p>
           </div>
           <div className='w-full flex justify-center'>
           <Image width={165} height={400} alt="Sidebar." src="/images/render-sidebar.png" className=" max-h-[400px] shadow-2xl rounded-lg"/>
           </div>
-        </section>
+        </div>
       </div>
     </>
 
