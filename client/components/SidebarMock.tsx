@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
+import Link from 'next/link';
 
 const space = ['Kitchen', 'Bath', 'Living Room', 'Dining Room'];
 const style = ['Contemporary', 'Modern', 'Minimalist', 'Rustic', 'Industrial', 'Scandanavian', 'Maximalist', 'Mid-century modern'];
@@ -8,7 +9,7 @@ const accent = ['Any', 'Satin Nickel', 'Polished Brass', 'Chrome', 'Matte Black'
 const lighting = ['Sunlight', 'Ambient', 'Dark'];
 
 
-function Sidebar(props: any) {
+function SidebarMock(props: any) {
 
     let api_ping_url = '';
     let api_generate_url = '';
@@ -40,7 +41,6 @@ function Sidebar(props: any) {
     const [setcolor, setColorSelect] = useState(color[0])
     const [setaccent, setAccentSelect] = useState(accent[0])
     const [setlighting, setLightingSelect] = useState(lighting[0])
-    const [setnum, setNumSelect] = useState(1)
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -52,42 +52,10 @@ function Sidebar(props: any) {
                 color: setcolor,
                 accent: setaccent,
                 lighting: setlighting,
-                num: setnum,
             };
-            props.setLoading(true);
-            console.log(req);
-            const response = await fetch(api_generate_url, {
-                method: 'POST',
-                body: JSON.stringify(req),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-
-            );
-
-            if (response.ok) {
-                const responseData = await response.json();
-
-                if (responseData.prompt) {
-                    const prompt = responseData.prompt;
-                    const img_qty = responseData.num;
-                    const images = responseData.images;
-                    props.updateResponse(responseData);
-                    console.log('Prompt:', prompt);
-                    console.log('Img qty:', img_qty);
-                    console.log('Images:', images);
-                } else {
-                    console.error('API response does not contain combinedValues');
-                }
-            } else {
-                console.error('API error:', response.statusText);
-            } 
         } catch (error) {
             console.error('API error:', error);
-        } finally {
-            props.setLoading(false);
-        }
+        } 
     };
 
 
@@ -336,26 +304,12 @@ function Sidebar(props: any) {
                             </div>
 
                         </div>
-                        <div className="mb-4">
-                            <label className="block mb-2">
-                                Number of Images
-                            </label>
-                            <input
-                                type="number"
-                                min="1"
-                                max="4"
-                                name="numberOfImages" value={setnum} onChange={(event) => setNumSelect(Number(event.target.value))}
-                                className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-xl shadow-sm placeholder-gray-400
-                                focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                                disabled:bg-gray-50 text-gray-900 disabled:border-gray-200 disabled:shadow-none
-                                invalid:border-pink-500" />
-                        </div>
                         <button
+                        
                             id="submit_request"
-                            type="submit"
                             className="w-full bg-blue-500 text-white p-2 rounded"
                         >
-                            Generate
+                            <Link href="/create">Create Now</Link>
                         </button>
                     </form>
                 </div>
@@ -363,4 +317,4 @@ function Sidebar(props: any) {
     );
 }
 
-export default Sidebar;
+export default SidebarMock;

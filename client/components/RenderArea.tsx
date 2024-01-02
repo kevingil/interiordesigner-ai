@@ -17,7 +17,7 @@ function RenderArea(props: any) {
     setIsOpen(true);
   }
   return (
-    <div className="backdrop-blur-sm rounded-xl grow sm:h-full">
+    <div className="grow sm:h-full">
       <p className='text-xl'>Image Render</p>
 
       <div className="flex justify-center items-center w-ful h-full">

@@ -26,7 +26,7 @@ function Create() {
 
   return (
     <Layout>
-      <div className="flex flex-col-reverse sm:flex-row gap-2 max-w-[900px] mx-auto">
+      <div className="flex flex-col-reverse sm:flex-row gap-4 max-w-[900px] mx-auto mt-12">
       <Transition
         as={Fragment}
         show={isShowing}
@@ -36,7 +36,7 @@ function Create() {
         leave="transition-all ease-in-out duration-300"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-      ><div className="bg-stone-900/50  rounded-xl shadow p-4 grow sm:max-h-[620px]"><RenderArea response={response} loading={loading} /></div>
+      ><div className="purp bg-black/50 rounded-xl shadow p-4 grow  "><RenderArea response={response} loading={loading} /></div>
       </Transition>
       <Transition
         as={Fragment}

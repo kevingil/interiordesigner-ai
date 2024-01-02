@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react'
 import Typed from 'typed.js';
+import SidebarMock from './SidebarMock';
 
 
 const Hero = () => {
@@ -30,7 +31,7 @@ const Hero = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsShowing(true);
-    }, 300);
+    }, 100);
 
     return () => {
       clearTimeout(timeoutId);
@@ -88,7 +89,7 @@ const Hero = () => {
                 </p>
           </div>
         </div>
-        <div className='flex flex-col sm:flex-row p-4 mb-[200px] gap-12 max-w-[900px] mx-auto'>
+        <div className='flex flex-col sm:flex-row p-4 mb-[100px] gap-12 max-w-[900px] mx-auto'>
           <div className='w-full my-auto feature'>
                 <h3 className='text-3xl font-semibold mb-4'>
                 Simple to use interface.
@@ -98,7 +99,7 @@ const Hero = () => {
                 </p>
           </div>
           <div className='w-full flex justify-center'>
-          <Image width={165} height={400} alt="Sidebar." src="/images/render-sidebar.png" className=" max-h-[400px] shadow-2xl rounded-lg"/>
+          <SidebarMock/>
           </div>
         </div>
       </div>

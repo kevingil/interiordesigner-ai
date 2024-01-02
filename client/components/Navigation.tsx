@@ -16,7 +16,7 @@ const Navigation = () => {
         };
     }, []);
   return (
-    <div className='z-50 fixed w-full bg-black/90 backdrop-blur-sm shadow-md'>
+    <div className='z-50 fixed grow-0 w-full bg-black/90 backdrop-blur-sm shadow-md'>
 <nav className="rounded p-2 mx-auto my-2 mb-3 flex justify-between items-center max-w-[900px]">
       <div className="text-2xl font-semibold home_title_nav">
         <Link href="/">Interior Designer.AI</Link>
@@ -24,7 +24,7 @@ const Navigation = () => {
       <div className="space-x-4 flex justify-end gap-4 text-white">
       <Link href="/gallery">Gallery</Link>
       <Link href="/contact">Contact</Link>
-        <a href="https://github.com/kevingil/interior-designer">Github</a>
+      <a href="https://github.com/kevingil/interiordesigner-ai">Github ↗</a>
       </div>
     </nav>
     </div>

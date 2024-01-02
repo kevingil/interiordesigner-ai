@@ -24,9 +24,20 @@ body {
     padding: 0;
 }
 
+footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+}
+
 .main {
     background: linear-gradient(to top, #230c66 0%, #170942 10%,#080013 20%, #05000e 100%);  
     background-repeat: no-repeat;
+    
+    position: relative;
+    min-height: 100vh;
 }
 
 input:checked+label {
@@ -47,7 +58,8 @@ input:checked+label {
 
 
 .gradient_text {
-    background-image: linear-gradient(0deg, #a584ff 0%, rgb(255, 255, 255) 50%);
+    background-image: linear-gradient(-20deg, #9267ff 0%, #997dff 100%);
+    font-weight: bold;
     background-size: 100%;
     background-repeat: repeat;
     -webkit-background-clip: text;
@@ -380,4 +392,8 @@ transform: rotate(1deg) translateX(50px) translateY(75px);
     box-shadow: 0 0 1rem rgba(149, 56, 255, 0.842);
 }
 
-
+.purp {
+    outline: 1px solid;
+    outline-color: rgba(200, 175, 240, 0.2);
+    box-shadow: 0 0 1rem rgba(149, 56, 255, 0.2);
+}
