@@ -1,15 +1,14 @@
 import React, { Fragment, useState } from "react";
 import Showcase from "../components/Showcase";
 import Layout from "../components/Layout";
-import Hero from "@/components/Hero";
 
 
-function Index() {
+function Gallery() {
   return (
     <Layout>
-      <Hero/>
+      <Showcase/>
     </Layout>
   );
 }
 
-export default Index;
+export default Gallery;

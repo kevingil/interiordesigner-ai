@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Navigation from '../components/Navigation';
+import Layout from '../components/Layout';
 import Sidebar from "../components/Sidebar";
 import RenderArea from "../components/RenderArea";
-import Footer from "../components/Footer";
 import { Transition } from '@headlessui/react';
 
 function Create() {
@@ -26,18 +25,7 @@ function Create() {
   };
 
   return (
-    <div className="w-full h-full">
-      <Transition
-        as={Fragment}
-        show={isShowing}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      ><div><Navigation /></div>
-      </Transition>
+    <Layout>
       <div className="flex flex-col-reverse sm:flex-row gap-2 max-w-[900px] mx-auto">
       <Transition
         as={Fragment}
@@ -62,18 +50,7 @@ function Create() {
       ><div><Sidebar updateResponse={updateResponse} setLoading={setLoading} /></div>
       </Transition>
       </div>
-      <Transition
-        as={Fragment}
-        show={isShowing}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      ><div><Footer /></div>
-      </Transition>
-    </div>
+    </Layout>
   );
 }
 

@@ -16,25 +16,15 @@ const Navigation = () => {
         };
     }, []);
   return (
-    <nav className="rounded p-2 mx-auto mt-2 mb-12 flex flex-row justify-between items-center max-w-[900px]">
-      <Transition
-                show={isShowing}
-                enter="transition-opacity duration-200"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-                className="w-full"
-            >
+    <nav className="rounded p-2 mx-auto my-2 w-full flex justify-between items-center max-w-[900px]">
       <div className="text-2xl font-semibold home_title_nav">
         <Link href="/">Interior Designer.AI</Link>
       </div>
       <div className="space-x-4 flex justify-end gap-4 text-white">
-        <a href="https://kevingil.com/contact">Contact</a>
+      <Link href="/gallery">Gallery</Link>
+      <Link href="/contact">Contact</Link>
         <a href="https://github.com/kevingil/interior-designer">Github</a>
       </div>
-      </Transition>
     </nav>
   );
 };
