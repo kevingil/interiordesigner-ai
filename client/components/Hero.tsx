@@ -76,7 +76,7 @@ const Hero = () => {
           </div>
         </section>
         </div>
-        <div className='flex flex-col sm:flex-row p-4 mt-12 mb-[200px] gap-12 max-w-[900px] mx-auto'>
+        <div className='flex flex-col sm:flex-row p-4 mt-12 mb-[50px] sm:mb-[100px] gap-12 max-w-[900px] mx-auto'>
           <div className='w-full purp rounded-lg'>
                 <Image width={300} height={200}  alt="A description for the second image." src="/images/showcase.png" className="w-full shadow-lg rounded-lg" />
           </div>
@@ -90,7 +90,7 @@ const Hero = () => {
                 <Link href="/gallery" className='text-violet-300 font-semibold'>See Renders →</Link>
           </div>
         </div>
-        <div className='flex flex-col sm:flex-row p-4 mb-[100px] gap-12 max-w-[900px] mx-auto'>
+        <div className='flex flex-col-reverse sm:flex-row p-4 mb-[100px] gap-12 max-w-[900px] mx-auto'>
           <div className='w-full my-auto feature'>
                 <h3 className='text-3xl font-semibold mb-4'>
                 Simple to use interface.
