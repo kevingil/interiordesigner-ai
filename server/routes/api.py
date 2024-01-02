@@ -17,7 +17,7 @@ async def return_home():
 @router.get("/gallery_latest")
 async def return_gallery_latest(request: Request):
     print(request)
-    renders = await get_latest_images(12)
+    renders = await get_latest_images(20)
     return renders
     
 # /generate_render

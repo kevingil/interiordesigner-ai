@@ -89,7 +89,7 @@ function Showcase() {
           <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
             {isLoading ? (
               <>
-                {[...Array(28)].map((_, index) => (
+                {[...Array(16)].map((_, index) => (
                   <div key={index} className="animate-pulse">
                     <div className="bg-zinc-900 rounded-xl max-h-[200px] w-full">
                       <div className='w-[70%] m-auto p-4'>
