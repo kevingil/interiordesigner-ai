@@ -41,7 +41,7 @@ const Navigation = () => {
         </div>
     </nav>
      <Transition show={menuOpen}
-     enter="transition ease-out duration-400"
+     enter="transition ease-out duration-500"
      enterFrom="opacity-0 -translate-y-1"
      enterTo="opacity-100 translate-y-0"
      leave="transition ease-in duration-400"
