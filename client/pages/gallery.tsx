@@ -1,16 +1,17 @@
 import React, { Fragment, useState } from "react";
 import Showcase from "../components/Showcase";
-import Image from 'next/image'
 import Layout from "../components/Layout";
-import Hero from "@/components/Hero";
 
 
-function Index() {
+function Gallery() {
   return (
     <Layout>
-      <Hero/>
+      <div className="max-w-[900px] mx-auto">
+      <h1 className='text-4xl text-left my-12'>Gallery</h1>
+      <Showcase/>
+      </div>
     </Layout>
   );
 }
 
-export default Index;
+export default Gallery;

@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Navigation from '../components/Navigation';
+import Layout from '../components/Layout';
 import Sidebar from "../components/Sidebar";
 import RenderArea from "../components/RenderArea";
-import Footer from "../components/Footer";
 import { Transition } from '@headlessui/react';
 
 function Create() {
@@ -26,19 +25,8 @@ function Create() {
   };
 
   return (
-    <div className="w-full h-full">
-      <Transition
-        as={Fragment}
-        show={isShowing}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      ><div><Navigation /></div>
-      </Transition>
-      <div className="flex flex-col-reverse sm:flex-row gap-2 max-w-[900px] mx-auto">
+    <Layout>
+      <div className="flex flex-col-reverse sm:flex-row gap-4 max-w-[900px] mx-auto mt-12">
       <Transition
         as={Fragment}
         show={isShowing}
@@ -48,7 +36,7 @@ function Create() {
         leave="transition-all ease-in-out duration-300"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-      ><div className="bg-stone-900/50  rounded-xl shadow p-4 grow sm:max-h-[620px]"><RenderArea response={response} loading={loading} /></div>
+      ><div className="purp bg-black/50 rounded-xl shadow p-4 grow  "><RenderArea response={response} loading={loading} /></div>
       </Transition>
       <Transition
         as={Fragment}
@@ -62,18 +50,7 @@ function Create() {
       ><div><Sidebar updateResponse={updateResponse} setLoading={setLoading} /></div>
       </Transition>
       </div>
-      <Transition
-        as={Fragment}
-        show={isShowing}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      ><div><Footer /></div>
-      </Transition>
-    </div>
+    </Layout>
   );
 }
 
