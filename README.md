@@ -1,11 +1,13 @@
 # Interior Designer - AI
->Prodution repository for interiordesigner-ai.com
+>Create interior design renders with the Stable Diffusion API
+
+[InteriorDesigner-AI.com](https://interiordesigner-ai.com/)
 
 
-![IDAI.png](https://cdn.kevingil.com/interior-designer-11-23.png)
+![IDAI.png](https://s6.imgcdn.dev/fC8Py.png)
 
 
-Old Demo: [DEMO](http://147.182.233.135:3000/)
+
 
 
 ## Develop
