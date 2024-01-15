@@ -7,7 +7,7 @@ from database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
-from jwt import decodeJWT
+from auth import decodeJWT
 import re
 
 router = APIRouter()
