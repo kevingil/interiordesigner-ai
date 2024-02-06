@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException,Request
+from fastapi import Depends, FastAPI, HTTPException,Request,APIRouter
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 import auth.controllers as crud
@@ -10,7 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from auth import decodeJWT
 import re
-from api import router
+
+
+router = APIRouter()
 
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
