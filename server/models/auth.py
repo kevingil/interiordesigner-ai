@@ -2,7 +2,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 import hashlib
 
-from database import Base
+from auth.database import Base
 
 
 class User(Base):

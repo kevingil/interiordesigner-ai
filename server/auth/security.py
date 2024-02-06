@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from typing import Optional
 from jwt import *
 import json
-import crud
 
 SECRET_KEY = ""
 ALGORITHM = "HS256"

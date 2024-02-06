@@ -2,15 +2,16 @@ from typing import List
 from fastapi import Depends, FastAPI, HTTPException,Request
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-import crud, models, schemas,security
-from database import SessionLocal, engine
+import auth.controllers as crud
+import models, schemas,auth.security
+from auth.database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from auth import decodeJWT
 import re
+from api import router
 
-router = APIRouter()
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
