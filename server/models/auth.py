@@ -1,39 +1,40 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
-import hashlib
+from typing import List, Optional
+from pydantic import BaseModel
 
-from auth.database import Base
+class ItemBase(BaseModel):
+    title: str
+    description: Optional[str] = None
+class ItemCreate(ItemBase):
+    pass
 
+class Item(ItemBase):
+    id: int
+    owner_id: int
+    class Config:
+        orm_mode = True
 
-class User(Base):
-    __tablename__ = "users"
+class UserBase(BaseModel):
+    email: str
 
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    salt= Column(String)
-    is_active = Column(Boolean, default=True)
+class UserCreate(UserBase):
+    password: str
 
-    items = relationship("Item",back_populates="owner")
-    notes = relationship("Note",back_populates="owner")
-    
+class User(UserBase):
+    id: int
+    is_active: bool
+    items: List[Item] = []
 
+    class Config:
+        orm_mode = True
 
-class Item(Base):
-    __tablename__ = "items"
+class Token(BaseModel):
+    access_token: str
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+class Note(BaseModel):
+    id: str
+    title:str
+    description:str
 
-    owner = relationship("User", back_populates="items")
-
-class Note(Base):
-    __tablename__ = "notes"
-
-    id = Column(String, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-    owner = relationship("User", back_populates="notes")
+class NoteRequest(BaseModel):
+    title:str
+    description:str
