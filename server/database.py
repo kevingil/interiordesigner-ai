@@ -1,9 +1,23 @@
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 import os
 import asyncpg
 import boto3
 from asyncpg import Pool
 from dotenv import load_dotenv
 from datetime import datetime, timezone
+
+# SQLALCHEMY_DATABASE_URL = ""
+SQLALCHEMY_DATABASE_URL = ""
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={}
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
 
 async def neon_ping():
     

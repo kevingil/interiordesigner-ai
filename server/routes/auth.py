@@ -2,13 +2,14 @@ from typing import List
 from fastapi import Depends, FastAPI, HTTPException,Request,APIRouter
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-import auth.controllers as crud
-import models, schemas,auth.security
-from auth.database import SessionLocal, engine
+import core.users as crud
+import models
+import auth.security as security
+from server.database import SessionLocal, engine
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
-from auth import decodeJWT
+from auth.jwt import decodeJWT
 import re
 
 
@@ -44,8 +45,8 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+@app.post("/users/", response_model=models.User)
+def create_user(user: models.UserCreate, db: Session = Depends(get_db)):
     print(user.email)
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     db_user = crud.get_user_by_email(db, email=user.email)
@@ -55,13 +56,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=409, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
-@app.get("/users/", response_model=List[schemas.User])
+@app.get("/users/", response_model=List[models.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
-@app.get("/users/{user_id}", response_model=schemas.User)
+@app.get("/users/{user_id}", response_model=models.User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -69,19 +70,19 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
+@app.post("/users/{user_id}/items/", response_model=models.Item)
 def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
+    user_id: int, item: models.ItemCreate, db: Session = Depends(get_db)
 ):
     return crud.create_user_item(db=db, item=item, user_id=user_id)
 
 
-# @app.get("/items/", response_model=List[schemas.Item])
+# @app.get("/items/", response_model=List[models.Item])
 # def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 #     items = crud.get_items(db, skip=skip, limit=limit)
 #     return items
 
-@app.post("/token", response_model=schemas.Token)
+@app.post("/token", response_model=models.Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # user = authenticate_user(fake_users_db, form_data.username, form_data.password)
     # print(form_data.username)
@@ -100,8 +101,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token}
 
-@app.get("/user",response_model=schemas.User)
-async def get_current_user(token: schemas.Token,db: Session = Depends(get_db)):    
+@app.get("/user",response_model=models.User)
+async def get_current_user(token: models.Token,db: Session = Depends(get_db)):    
     email=security.get_current_user_email(token.access_token)
     db_user = crud.get_user_by_email(db, email=email)
     
@@ -167,8 +168,8 @@ async def post_user_items(request:Request,access_token:str,db: Session = Depends
 #     return {"message":json}
 
 # # Replace with JWT Access token response
-# @app.post("/login/", response_model=schemas.User)
-# def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+# @app.post("/login/", response_model=models.User)
+# def create_user(user: models.UserCreate, db: Session = Depends(get_db)):
 #     db_user = security.get_user_by_email(db, email=user.email)
 #     if (security.verify_hash(user.password,db_user.salt).decode('utf-8') == db_user.hashed_password):
 #         return db_user

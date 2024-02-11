@@ -2,8 +2,8 @@ import hashlib
 import base64
 from datetime import datetime, timedelta
 from typing import Optional
-from jwt import *
 import json
+from auth.jwt import *
 
 SECRET_KEY = ""
 ALGORITHM = "HS256"

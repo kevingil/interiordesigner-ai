@@ -4,10 +4,11 @@ import hashlib
 import base64
 from datetime import datetime, timedelta
 from typing import Optional, OrderedDict
-from jwt import *
+import auth.jwt 
 import json
+import models.auth as auth
 
-import server.models.auth as auth, server.schemas.auth as auth
+
 def get_user(db: Session, user_id: int):
     return db.query(auth.User).filter(auth.User.id == user_id).first()
 
