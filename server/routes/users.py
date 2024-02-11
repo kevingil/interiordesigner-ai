@@ -1,7 +1,5 @@
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException,Request,APIRouter
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
 import core.users as crud
 import models
 import auth.security as security
