@@ -4,7 +4,7 @@ from stripe.api_resources import Subscription
 from stripe.error import StripeError
 from core.users import get_user
 from models.auth import User
-from models.subscription import SubscriptionCreate, SubscriptionUpdate, SubscriptionCancel
+from models.subscription import SubscriptionCreate, SubscriptionUpdate, SubscriptionCancel, Subscription
 
 router = APIRouter(
     prefix="/billing",

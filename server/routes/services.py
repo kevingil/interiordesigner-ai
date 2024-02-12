@@ -13,12 +13,12 @@ router = APIRouter(
 
 
 @router.get("/ping")
-async def return_home():
+async def ping():
     return {'message': "Server Online"}
 
     
 @router.get("/gallery_latest")
-async def return_gallery_latest(request: Request):
+async def public_gallery_latest(request: Request):
     print(request)
     renders = await get_latest_images(20)
     return renders
