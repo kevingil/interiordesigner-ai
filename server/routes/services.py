@@ -19,7 +19,6 @@ async def ping():
     
 @router.get("/gallery_latest")
 async def public_gallery_latest(request: Request):
-    print(request)
     renders = await get_latest_images(20)
     return renders
     
