@@ -1,18 +1,15 @@
 import os
 import asyncpg
-import boto3
 from asyncpg import Pool
 from dotenv import load_dotenv
-from datetime import datetime, timezone
 
-DATABASE_URL = ""
 
 async def create_pool():
-    return await asyncpg.create_pool(DATABASE_URL)
-
-async def execute_query(query, *args):
-    async with Pool.acquire() as connection:
-        return await connection.fetch(query, *args)
+    # Connection string from .env
+    load_dotenv()
+    dsn = os.getenv("NEONDB")
+    new_pool = await asyncpg.create_pool(dsn)
+    return new_pool
 
 async def get_db():
     global pool
@@ -20,12 +17,14 @@ async def get_db():
         pool = await create_pool()
     return pool
 
+async def execute_query(query, *args):
+    async with Pool.acquire() as connection:
+        return await connection.fetch(query, *args)
+
 async def test():
-    
-    # Connection string
+    # Connection string from .env
     load_dotenv()
     dsn = os.getenv("NEONDB")
-
     try:
         # Establish a connection pool
         pool: Pool = await asyncpg.create_pool(dsn)

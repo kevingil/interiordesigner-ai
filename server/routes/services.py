@@ -6,7 +6,10 @@ from core.stability_text import *
 from core.blurhash64 import *
 import time
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Services"],
+    responses={404: {"description": "Not found"}},
+)
 
 
 @router.get("/ping")

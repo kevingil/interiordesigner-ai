@@ -2,16 +2,18 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import Optional
 from stripe.api_resources import Subscription
 from stripe.error import StripeError
-from schemas.subscription import SubscriptionCreate, SubscriptionUpdate, SubscriptionCancel
+from core.users import get_user
+from models.auth import User
+from models.subscription import SubscriptionCreate, SubscriptionUpdate, SubscriptionCancel
 
 router = APIRouter(
     prefix="/billing",
-    tags=["billing"],
+    tags=["Billing"],
     responses={404: {"description": "Not found"}},
 )
 
 @router.post("/subscribe", response_model=Subscription)
-async def subscribe(subscription_data: SubscriptionCreate, current_user: User = Depends(get_current_active_user)):
+async def subscribe(subscription_data: SubscriptionCreate, current_user: User = Depends(get_user)):
     try:
         # TODO: integrate with Stripe to create a subscription
         # Example:
@@ -27,8 +29,8 @@ async def subscribe(subscription_data: SubscriptionCreate, current_user: User = 
     except StripeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.put("/update-subscription", response_model=Subscription)
-async def update_subscription(subscription_data: SubscriptionUpdate, current_user: User = Depends(get_current_active_user)):
+@router.put("/subscription/update", response_model=Subscription)
+async def update_subscription(subscription_data: SubscriptionUpdate, current_user: User = Depends(get_user)):
     try:
         # TODO: integrate with Stripe to update a subscription
         # Example:
@@ -44,8 +46,8 @@ async def update_subscription(subscription_data: SubscriptionUpdate, current_use
     except StripeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.delete("/cancel-subscription", response_model=Subscription)
-async def cancel_subscription(subscription_data: SubscriptionCancel, current_user: User = Depends(get_current_active_user)):
+@router.delete("/subscription/cancel", response_model=Subscription)
+async def cancel_subscription(subscription_data: SubscriptionCancel, current_user: User = Depends(get_user)):
     try:
         # TODO: integrate with Stripe to cancel a subscription
         # Example:
@@ -56,8 +58,8 @@ async def cancel_subscription(subscription_data: SubscriptionCancel, current_use
     except StripeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/subscription-details", response_model=Subscription)
-async def get_subscription_details(subscription_id: str, current_user: User = Depends(get_current_active_user)):
+@router.get("/subscription/details", response_model=Subscription)
+async def get_subscription_details(subscription_id: str, current_user: User = Depends(get_user)):
     try:
         # TODO: integrate with Stripe to retrieve subscription details
         # Example:

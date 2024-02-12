@@ -1,17 +1,17 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
-class ItemBase(BaseModel):
+class ImageBase(BaseModel):
     title: str
     description: Optional[str] = None
-class ItemCreate(ItemBase):
+class ImageCreate(ImageBase):
     pass
 
-class Item(ItemBase):
+class Image(ImageBase):
     id: int
     owner_id: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class UserBase(BaseModel):
     email: str
@@ -22,10 +22,10 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    items: List[Item] = []
+    images: List[Image] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
