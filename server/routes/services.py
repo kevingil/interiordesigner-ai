@@ -1,22 +1,24 @@
 from fastapi import Request, APIRouter
-from app.utils.prompt import generate_prompt
-from app.utils.r2 import *
-from app.utils.gallery import *
-from app.utils.stability_text import *
-from app.utils.blurhash64 import *
+from core.prompt import generate_prompt
+from core.database import *
+from core.gallery import *
+from core.stability_text import *
+from core.blurhash64 import *
 import time
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Services"],
+    responses={404: {"description": "Not found"}},
+)
 
 
 @router.get("/ping")
-async def return_home():
+async def ping():
     return {'message': "Server Online"}
 
     
 @router.get("/gallery_latest")
-async def return_gallery_latest(request: Request):
-    print(request)
+async def public_gallery_latest(request: Request):
     renders = await get_latest_images(20)
     return renders
     

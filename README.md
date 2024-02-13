@@ -12,7 +12,7 @@
 
 ## Develop
 
-This project uses Stable Diffusion to generate renders and Cloudflare R2 storage. 
+This project uses Stable Diffusion to generate renders and Cloudflare R2 storage. The project makes use of cython dependencies that are not compatible with Python 3.12+ for now.
 
 
 Setup API Keys
