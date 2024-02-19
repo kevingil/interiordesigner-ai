@@ -24,6 +24,6 @@ app.include_router(billing.router)
 
 
 if __name__ == "__main__":
-    asyncio.run(test())
+    # asyncio.run(test())
     uvicorn.run("run:app", port=5000, log_level="info")
 

@@ -30,14 +30,15 @@ origins = "*"
 
 
 @router.post("/", response_model=User)
-async def create_user(user: UserCreate, db = Depends(get_db)):
+async def new_user(user: UserCreate, database=Depends(get_db)): 
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    db_user = get_user_by_email(db, email=user.email)
-    if (re.fullmatch(regex, user.email) == None):
+    email = user.email
+    db_user = await get_user_by_email(database, email)  
+    if (re.fullmatch(regex, user.email) is None):
         raise HTTPException(status_code=409, detail="Invalid Email Address")
     if db_user:
         raise HTTPException(status_code=409, detail="Email already registered")
-    return create_user(db=db, user=user)
+    return await create_user(database, user)
 
 
 @router.get("/{user_id}", response_model=User)

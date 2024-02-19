@@ -4,7 +4,7 @@ from asyncpg import Pool
 from dotenv import load_dotenv
 
 
-pool = None  # Init pool
+pool = None  # Initialize the pool variable
 
 
 async def create_pool():
@@ -16,14 +16,13 @@ async def create_pool():
     return pool
 
 
+async def execute_query(connection, query, *args):
+    return await connection.fetch(query, *args)
+
+
 async def get_db():
     return await create_pool()
 
-
-async def execute_query(query, *args):
-    pool = await create_pool()  
-    async with pool.acquire() as connection:
-        return await connection.fetch(query, *args)
 
 async def test():
     pool = await create_pool()  
