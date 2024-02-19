@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class ImageBase(BaseModel):
     title: str
-    description: Optional[str] = None
+    url: str
 class ImageCreate(ImageBase):
     pass
 
@@ -21,20 +21,10 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    is_active: bool
+    role: str
     images: List[Image] = []
-
     class Config:
         from_attributes = True
 
 class Token(BaseModel):
     access_token: str
-
-class Note(BaseModel):
-    id: str
-    title:str
-    description:str
-
-class NoteRequest(BaseModel):
-    title:str
-    description:str

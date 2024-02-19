@@ -10,7 +10,7 @@ from core.users import (
     get_user,
     create_user_image,
 )
-from models.auth import UserCreate, User, ImageCreate, Token, Image
+from models.users import UserCreate, User, ImageCreate, Token, Image
 
 import auth.security as security
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -72,8 +72,3 @@ async def login_for_access_token(
     )
     return {"access_token": access_token}
 
-@router.post("/test")
-async def playground(request: Request):
-    json_data = await request.json()
-    print(json_data)
-    return {"message": json_data}
